@@ -1,0 +1,117 @@
+.form-side {
+  display: block;
+  height: 70vh;
+  width: auto;
+  padding-top: 7%;
+  background-color: whitesmoke;
+  padding-left: 4%;
+}
+
+.cardholder-name-container,
+.card-number-container,
+.cvc-container {
+  display: flex;
+  flex-direction: column;
+  margin: 30px 20px;
+}
+
+.exp-cvc-container {
+  display: flex;
+  width: 100%;
+  margin-left: 20px;
+}
+
+.expiry-date-container {
+  margin: 0;
+  width: 55%;
+}
+.expiry-date-container input {
+  width: 35%;
+  margin-left: 10px;
+}
+
+.cvc-container {
+  margin: 0;
+  width: 35%;
+}
+.cvc-container input {
+  width: 100%;
+}
+
+input {
+  height: 40px;
+  margin-left: 10px;
+}
+
+input::placeholder {
+  color: gray;
+  font-style: italic;
+  padding: 10px;
+}
+
+label {
+  font-size: 1rem;
+  letter-spacing: 1px;
+  font-weight: 500;
+  display: block;
+  color: #333;
+  margin-bottom: 10px;
+  font-family: "Space Grotesk";
+  text-transform: uppercase;
+}
+
+.button-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  width: 90%;
+  height: 50px;
+  border: none;
+  background-color: #333;
+  color: white;
+  font-size: 1rem;
+  font-weight: 200;
+  letter-spacing: 1px;
+  font-family: "Montserrat Alternates";
+  text-transform: capitalize;
+  margin: 6% 0;
+  position: absolute;
+  bottom: 0;
+}
+
+/* VALIDADORES */
+
+.cardNumberError {
+  border: 1px solid red;
+}
+
+.cardNumerSuccess {
+  border: 1px solid green;
+}
+
+.error {
+  border: 1px solid red;
+}
+
+.success {
+  border: 1px solid green;
+}
+
+/* 
+## Colors
+
+### Primary
+
+- Linear gradient (active input border): hsl(249, 99%, 64%) to hsl(278, 94%, 30%)
+- Red (input errors): hsl(0, 100%, 66%)
+
+### Neutral
+
+- White: hsl(0, 0%, 100%)
+- Light grayish violet: hsl(270, 3%, 87%)
+- Dark grayish violet: hsl(279, 6%, 55%)
+- Very dark violet: hsl(278, 68%, 11%)
+ */
