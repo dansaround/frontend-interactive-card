@@ -2,6 +2,6 @@
   width: 100%;
   height: 250px;
   position: relative;
-  background-image: url("src/assets/images/bg-main-mobile.png");
+  background-image: url("../../assets/images/bg-main-mobile.png");
   background-size: cover;
 }
