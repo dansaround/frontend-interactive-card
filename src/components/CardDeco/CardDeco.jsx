@@ -1,7 +1,9 @@
 import "./CardDeco.css";
-
+// CardDeco is the main component
 function CardDeco({ cardContent }) {
+  // Get card number from props
   const cardNumber = cardContent.cardNumber || "0000000000000000";
+  // Format card number
   const formattedCardNumber = cardNumber.replace(/(.{4})/g, "$1 ");
 
   return (
@@ -11,7 +13,6 @@ function CardDeco({ cardContent }) {
           <span>{cardContent.cvc || "CVV"}</span>
         </div>
       </div>
-
       <div className="card-front">
         <div className="card-logo">
           <img src="src/assets/images/card-logo.svg" alt="" />

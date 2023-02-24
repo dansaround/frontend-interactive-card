@@ -2,6 +2,124 @@
   display: block;
   height: 70vh;
   width: auto;
+  padding-top: 50px;
+  background-color: whitesmoke;
+  padding-left: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 30px 20px;
+}
+
+.exp-cvc-container {
+  display: flex;
+  margin: 30px 20px;
+  justify-content: space-between;
+}
+
+.expiry-date-container {
+  margin: 0;
+  width: 50%;
+}
+
+.cvc-container {
+  margin: 0;
+  margin-right: 30px;
+  width: 30%;
+}
+
+.expiry-date-container input {
+  width: 25%;
+  margin-right: 30 px;
+}
+
+input {
+  height: 40px;
+  width: 90%;
+  margin-top: 5px;
+}
+
+input::placeholder {
+  color: gray;
+  font-style: italic;
+  padding: 10px;
+}
+
+label {
+  font-size: 1rem;
+  letter-spacing: 1px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 10px;
+  font-family: "Space Grotesk";
+  text-transform: uppercase;
+}
+
+.button-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 20px;
+}
+
+.button-primary {
+  margin: 0;
+  width: 100%;
+  height: 50px;
+  border: none;
+  background-color: #333;
+  color: white;
+  font-size: 1rem;
+  font-weight: 200;
+  letter-spacing: 1px;
+  font-family: "Montserrat Alternates";
+  text-transform: capitalize;
+}
+
+/* VALIDADORES */
+
+.error {
+  transition: height 0.3s ease-in-out;
+  font-size: 13px;
+  margin-top: 4px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  height: 20px;
+  color: red;
+  transform: translateY(-10px);
+  margin: 0;
+}
+.info--hidden {
+  height: 0 !important;
+}
+
+.cardNumberError {
+  border: 1px solid red;
+}
+
+.cardNumerSuccess,
+.success {
+  border: 1px solid green;
+}
+
+/* MEDIA QUERIES DESKTOP */
+@media only screen and (min-width: 768px) {
+  .form-side {
+    display: flex;
+    width: 50%;
+    padding-top: 50px;
+    background-color: whitesmoke;
+    padding-left: 20px;
+  }
+}
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+/* .form-side {
+  display: block;
+  height: 70vh;
+  width: auto;
   padding-top: 7%;
   background-color: whitesmoke;
   padding-left: 4%;
@@ -82,25 +200,6 @@ button {
   bottom: 0;
 }
 
-/* VALIDADORES */
-
-.cardNumberError {
-  border: 1px solid red;
-}
-
-.cardNumerSuccess {
-  border: 1px solid green;
-}
-
-.error {
-  border: 1px solid red;
-}
-
-.success {
-  border: 1px solid green;
-}
-
-/* 
 ## Colors
 
 ### Primary
