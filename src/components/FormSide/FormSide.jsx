@@ -1,147 +1,80 @@
 import "./FormSide.css";
 import { useState } from "react";
 
-function FormSide({ updateCardContent }) {
-  const [cardholderName, setCardholderName] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiryDateMonth, setExpiryDateMonth] = useState("");
-  const [expiryDateYear, setExpiryDateYear] = useState("");
-  const [cvc, setCvc] = useState("");
-  const [cardNumberError, setCardNumberError] = useState("");
+function FormSide({ cardContent, setCardContent }) {
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    if (name === "cardNumber")
+      e.target.value = value
+        .replace(/\s/g, "")
+        .replace(/(.{4})/g, "$1 ")
+        .trim()
+        .slice(0, 19);
+    if (name === "expiryDateMonth" || name === "expiryDateYear")
+      e.target.value = value
+        .toString()
+        .replace(/[^0-9]/g, "")
+        .substring(0, 2);
+    if (name === "expiryDateMonth" && value > 12) e.target.value = "12";
+    if (name === "cvc")
+      e.target.value = value.replace(/[^0-9]/g, "").substring(0, 3);
 
-  //   FUNCIONES PARA CAMBIAR EL ESTADO DE LOS INPUTS
-
-  const handleCardholderNameChange = (e) => {
-    setCardholderName(e.target.value);
-    updateCardContent(e);
+    setCardContent({ ...cardContent, [name]: e.target.value });
   };
 
-  const handleCardNumberChange = (e) => {
-    setCardNumber(e.target.value);
-    updateCardContent(e);
-    handleCardNumberValidation(e.target.value);
-  };
+  const handleError = (target, message = "Error", type = "add") => {
+    const buttonPrimary = document.querySelector(".button--primary");
+    buttonPrimary.classList.add("shake");
+    buttonPrimary.addEventListener("animationend", () => {
+      buttonPrimary.classList.remove("shake");
+    });
 
-  const handleExpiryDateMonthChange = (e) => {
-    setExpiryDateMonth(e.target.value);
-    updateCardContent(e);
-  };
-
-  const handleExpiryDateYearChange = (e) => {
-    setExpiryDateYear(e.target.value);
-    updateCardContent(e);
-  };
-
-  const handleCvcChange = (e) => {
-    setCvc(e.target.value);
-    updateCardContent(e);
-  };
-
-  const handleCardNumberValidation = (cardNumberValue) => {
-    if (cardNumberValue.length < 16) {
-      setCardNumberError("error");
-    } else {
-      setCardNumberError("success");
-    }
-  };
-
-  //   CREA UNA FUNCION PARA VALIDAR TODOS LOS INPUTS
-
-  const validateInputs = () => {
-    let cardholderNameInput = document.getElementById("cardholder-name");
-    let cardNumberInput = document.getElementById("card-number");
-    let expiryDateMonthInput = document.getElementById("expiry-date-month");
-    let expiryDateYearInput = document.getElementById("expiry-date-year");
-    let cvcInput = document.getElementById("cvc");
-
-    let cardholderNameInfo = cardholderNameInput.nextElementSibling;
-    let cardNumberInfo = cardNumberInput.nextElementSibling;
-    let expiryDateMonthInfo = expiryDateMonthInput.nextElementSibling;
-    let expiryDateYearInfo = expiryDateYearInput.nextElementSibling;
-    let cvcInfo = cvcInput.nextElementSibling;
-
-    //   VALIDACION PARA EL INPUT DEL NOMBRE DEL TITULAR
-
-    if (cardholderNameInput.value === "") {
-      cardholderNameInput.classList.add("error");
-      cardholderNameInfo.classList.remove("info--hidden");
-      cardholderNameInfo.textContent = "Please fill out this field";
-    } else {
-      cardholderNameInput.classList.remove("error");
-      cardholderNameInfo.classList.add("info--hidden");
-      cardholderNameInfo.textContent = "";
-    }
-
-    //   VALIDACION PARA EL INPUT DEL NUMERO DE TARJETA
-
-    if (cardNumberInput.value === "") {
-      cardNumberInput.classList.add("error");
-      cardNumberInfo.classList.remove("info--hidden");
-      cardNumberInfo.textContent = "Please fill out this field";
-    } else if (cardNumberError === "error") {
-      cardNumberInput.classList.add("error");
-      cardNumberInfo.classList.remove("info--hidden");
-      cardNumberInfo.textContent = "Please enter a valid card number";
-    } else {
-      cardNumberInput.classList.remove("error");
-      cardNumberInfo.classList.add("info--hidden");
-      cardNumberInfo.textContent = "";
-    }
-
-    //   VALIDACION PARA EL INPUT DEL MES DE EXPIRACION
-
-    if (expiryDateMonthInput.value === "") {
-      expiryDateMonthInput.classList.add("error");
-      expiryDateMonthInfo.classList.remove("info--hidden");
-      expiryDateMonthInfo.textContent = "Please fill out this field";
-    } else {
-      expiryDateMonthInput.classList.remove("error");
-      expiryDateMonthInfo.classList.add("info--hidden");
-      expiryDateMonthInfo.textContent = "";
-    }
-
-    //   VALIDACION PARA EL INPUT DEL AÑO DE EXPIRACION
-
-    if (expiryDateYearInput.value === "") {
-      expiryDateYearInput.classList.add("error");
-      expiryDateYearInfo.classList.remove("info--hidden");
-      expiryDateYearInfo.textContent = "Please fill out this field";
-    } else {
-      expiryDateYearInput.classList.remove("error");
-      expiryDateYearInfo.classList.add("info--hidden");
-      expiryDateYearInfo.textContent = "";
-    }
-
-    //   VALIDACION PARA EL INPUT DEL CVC
-
-    if (cvcInput.value === "") {
-      cvcInput.classList.add("error");
-      cvcInfo.classList.remove("info--hidden");
-      cvcInfo.textContent = "Please fill out this field";
-    } else {
-      cvcInput.classList.remove("error");
-      cvcInfo.classList.add("info--hidden");
-      cvcInfo.textContent = "";
-    }
+    document.querySelector(`.label${target}`).nextElementSibling.innerHTML =
+      message;
+    document
+      .querySelector(`.label${target}`)
+      .nextElementSibling.classList[type === "add" ? "add" : "remove"](
+        "info--hidden"
+      );
+    document.querySelector(`.label${target}`).classList[type]("input--error");
   };
 
   //   FUNCION PARA EL BOTON SUBMIT
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Cardholder Name: ", cardholderName);
-    console.log("Card Number: ", cardNumber);
-    console.log("Expiry Date Month: ", expiryDateMonth);
-    console.log("Expiry Date Year: ", expiryDateYear);
-    console.log("CVC: ", cvc);
-    // AQUI SE PUEDE HACER LLAMADA A UNA API O ENVIAR LOS DATOS A OTRO COMPONENTE
+
+    for (let i in cardContent) {
+      if (!cardContent[i]) {
+        handleError(i, "Can`t be blank");
+      } else handleError(i, "", "remove");
+    }
+
+    if (cardContent.cardNumber) {
+      if (cardContent.cardNumber.length < 19) {
+        handleError("cardNumber", "Number is too short");
+      } else if (cardContent.cardNumber.match(/[^0-9\s]/g)) {
+        handleError("cardNumber", "Wrong format, numbers only");
+      } else handleError("cardNumber", "", "remove");
+    }
+
+    if (cardContent.cvc) {
+      if (cardContent.cvc.length < 3) {
+        handleError("cvc", "CVC is too short");
+      } else handleError("cvc", "", "remove");
+    }
+
+    if (!cardContent.expiryDateMonth)
+      handleError("expiryDateMonth", "Can`t be blank");
+    if (!cardContent.expiryDateYear)
+      handleError("expiryDateYear", "Can`t be blank");
   };
 
   return (
     <section className="form-side">
       <form
         onSubmit={() => {
-          handleSubmit(), validateInputs();
+          handleSubmit();
         }}
       >
         <div className="container">
@@ -152,7 +85,7 @@ function FormSide({ updateCardContent }) {
               id="cardholder-name"
               name="cardholderName"
               placeholder="e.g. Jane Appleseed"
-              onChange={handleCardholderNameChange}
+              onChange={handleInput}
               required
             />
           </label>
@@ -167,7 +100,7 @@ function FormSide({ updateCardContent }) {
               id="card-number"
               name="cardNumber"
               placeholder="e.g. 1234 5678 9012 3456"
-              onChange={handleCardNumberChange}
+              onChange={handleInput}
               required
             />
           </label>
@@ -183,7 +116,7 @@ function FormSide({ updateCardContent }) {
                 id="expiry-date-month"
                 name="expiryDateMonth"
                 placeholder="MM"
-                onChange={handleExpiryDateMonthChange}
+                onChange={handleInput}
                 required
               />
               <input
@@ -191,7 +124,7 @@ function FormSide({ updateCardContent }) {
                 id="expiry-date-year"
                 name="expiryDateYear"
                 placeholder="YY"
-                onChange={handleExpiryDateYearChange}
+                onChange={handleInput}
                 required
               />
             </label>
@@ -205,15 +138,15 @@ function FormSide({ updateCardContent }) {
                 id="cvc"
                 name="cvc"
                 placeholder="e.g. 123"
-                onChange={handleCvcChange}
+                onChange={handleInput}
                 required
               />
             </label>
             <p className="info info--hidden" aria-live="polite"></p>
           </div>
         </div>
-        <div className="button-area">
-          <button type="submit" className="button-primary">
+        <div className="button--area">
+          <button type="submit" className="button--primary">
             Confirm
           </button>
         </div>
@@ -222,3 +155,39 @@ function FormSide({ updateCardContent }) {
   );
 }
 export default FormSide;
+
+// //   FUNCIONES PARA CAMBIAR EL ESTADO DE LOS INPUTS
+
+// const handleCardholderNameChange = (e) => {
+//   setCardholderName(e.target.value);
+//   updateCardContent(e);
+// };
+
+// const handleCardNumberChange = (e) => {
+//   setCardNumber(e.target.value);
+//   updateCardContent(e);
+//   handleCardNumberValidation(e.target.value);
+// };
+
+// const handleExpiryDateMonthChange = (e) => {
+//   setExpiryDateMonth(e.target.value);
+//   updateCardContent(e);
+// };
+
+// const handleExpiryDateYearChange = (e) => {
+//   setExpiryDateYear(e.target.value);
+//   updateCardContent(e);
+// };
+
+// const handleCvcChange = (e) => {
+//   setCvc(e.target.value);
+//   updateCardContent(e);
+// };
+
+// const handleCardNumberValidation = (cardNumberValue) => {
+//   if (cardNumberValue.length < 16) {
+//     setCardNumberError("error");
+//   } else {
+//     setCardNumberError("success");
+//   }
+// };

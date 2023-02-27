@@ -11,17 +11,10 @@ function Container() {
     cvc: "",
   });
 
-  const updateCardContent = (e) => {
-    setCardContent({
-      ...cardContent,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   return (
     <>
       <Header cardContent={cardContent} />
-      <FormSide updateCardContent={updateCardContent} />
+      <FormSide cardContent={cardContent} setCardContent={setCardContent} />
     </>
   );
 }

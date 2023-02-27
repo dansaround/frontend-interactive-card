@@ -31,7 +31,7 @@
 }
 
 .expiry-date-container input {
-  width: 25%;
+  width: 30%;
   margin-right: 30 px;
 }
 
@@ -39,6 +39,10 @@ input {
   height: 40px;
   width: 90%;
   margin-top: 5px;
+}
+
+input:nth-child(2) {
+  margin-left: 20px;
 }
 
 input::placeholder {
@@ -57,14 +61,14 @@ label {
   text-transform: uppercase;
 }
 
-.button-area {
+.button--area {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 30px 20px;
 }
 
-.button-primary {
+.button--primary {
   margin: 0;
   width: 100%;
   height: 50px;
@@ -95,13 +99,36 @@ label {
   height: 0 !important;
 }
 
-.cardNumberError {
-  border: 1px solid red;
+.input--error {
+  border: 1px solid var(--Red) !important;
 }
 
-.cardNumerSuccess,
-.success {
-  border: 1px solid green;
+.shake {
+  animation: shake 0.7s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+    background: var(--Red);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }
 
 /* MEDIA QUERIES DESKTOP */
