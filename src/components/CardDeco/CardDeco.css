@@ -32,8 +32,6 @@
   position: absolute;
   bottom: 8%;
   left: 3%;
-  /* margin-top: 20%;
-  margin-left: -10%; */
 }
 
 .card-back-content span {
@@ -91,4 +89,35 @@
 .card-back {
   transform: scale(0.6);
   margin: -65% 20% 0 0;
+}
+
+/* MEDIA QUERY DESKTOP  */
+@media only screen and (min-width: 768px) {
+  .card-front {
+    background-image: url("../../assets/images/bg-card-front.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    height: 245px;
+    width: 447px;
+    transform: scale(0.7);
+    position: absolute;
+    top: 0;
+    margin-top: 20%;
+    margin-left: -10%;
+  }
+
+  .card-back {
+    background-image: url("../../assets/images/bg-card-back.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    height: 245px;
+    width: 447px;
+    position: absolute;
+    bottom: 8%;
+    left: 3%;
+  }
 }

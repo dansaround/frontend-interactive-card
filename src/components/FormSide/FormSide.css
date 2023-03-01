@@ -84,7 +84,11 @@ label {
 
 /* VALIDADORES */
 
-.error {
+.info--hidden {
+  height: 0 !important;
+}
+
+.info {
   transition: height 0.3s ease-in-out;
   font-size: 13px;
   margin-top: 4px;
@@ -95,12 +99,9 @@ label {
   transform: translateY(-10px);
   margin: 0;
 }
-.info--hidden {
-  height: 0 !important;
-}
 
 .input--error {
-  border: 1px solid var(--Red) !important;
+  border: 1px solid red !important;
 }
 
 .shake {
@@ -111,7 +112,7 @@ label {
   10%,
   90% {
     transform: translate3d(-1px, 0, 0);
-    background: var(--Red);
+    background: red;
   }
 
   20%,
@@ -135,10 +136,6 @@ label {
 @media only screen and (min-width: 768px) {
   .form-side {
     display: flex;
-    width: 50%;
-    padding-top: 50px;
-    background-color: whitesmoke;
-    padding-left: 20px;
   }
 }
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */

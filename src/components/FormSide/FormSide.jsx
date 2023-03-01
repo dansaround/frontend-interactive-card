@@ -28,54 +28,60 @@ function FormSide({ cardContent, setCardContent }) {
       buttonPrimary.classList.remove("shake");
     });
 
-    document.querySelector(`.label${target}`).nextElementSibling.innerHTML =
-      message;
+    document.querySelector(`.pedro`).nextElementSibling.innerHTML = message;
     document
-      .querySelector(`.label${target}`)
-      .nextElementSibling.classList[type === "add" ? "add" : "remove"](
-        "info--hidden"
-      );
-    document.querySelector(`.label${target}`).classList[type]("input--error");
+      .querySelector(".pedro")
+      .classList[type === "add" ? "add" : "remove"]("info--hidden");
+    document.querySelector(`.juan`).classList[type]("input--error");
+
+    // document
+    //   .querySelector(`.label${target}`)
+    //   .nextElementSibling.classList[type === "add" ? "add" : "remove"](
+    //     "info--hidden"
+    //   );
+    // document.querySelector(`.label${target}`).classList[type]("input--error");
   };
 
   //   FUNCION PARA EL BOTON SUBMIT
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    handleError("pedro", "Can`t be blank");
+    // for (let i in cardContent) {
+    //   if (!cardContent[i]) {
+    //     handleError(i, "Can`t be blank");
+    //   } else handleError(i, "", "remove");
+    // }
 
-    for (let i in cardContent) {
-      if (!cardContent[i]) {
-        handleError(i, "Can`t be blank");
-      } else handleError(i, "", "remove");
-    }
+    // if (cardContent.cardNumber) {
+    //   if (cardContent.cardNumber.length < 19) {
+    //     handleError("cardNumber", "Number is too short");
+    //   } else if (cardContent.cardNumber.match(/[^0-9\s]/g)) {
+    //     handleError("cardNumber", "Wrong format, numbers only");
+    //   } else handleError("cardNumber", "", "remove");
+    // }
 
-    if (cardContent.cardNumber) {
-      if (cardContent.cardNumber.length < 19) {
-        handleError("cardNumber", "Number is too short");
-      } else if (cardContent.cardNumber.match(/[^0-9\s]/g)) {
-        handleError("cardNumber", "Wrong format, numbers only");
-      } else handleError("cardNumber", "", "remove");
-    }
+    // if (cardContent.cvc) {
+    //   if (cardContent.cvc.length < 3) {
+    //     handleError("cvc", "CVC is too short");
+    //   } else handleError("cvc", "", "remove");
+    // }
 
-    if (cardContent.cvc) {
-      if (cardContent.cvc.length < 3) {
-        handleError("cvc", "CVC is too short");
-      } else handleError("cvc", "", "remove");
-    }
+    // if (!cardContent.expiryDateMonth)
+    //   handleError("expiryDateMonth", "Can`t be blank");
+    // if (!cardContent.expiryDateYear)
+    //   handleError("expiryDateYear", "Can`t be blank");
 
-    if (!cardContent.expiryDateMonth)
-      handleError("expiryDateMonth", "Can`t be blank");
-    if (!cardContent.expiryDateYear)
-      handleError("expiryDateYear", "Can`t be blank");
+    // if (document.querySelectorAll(".input--error").length === 0)
+    //   console.log("Submitted data:", cardContent);
+
+    // if (document.querySelectorAll(".info--hidden").length === 0)
+    //   console.log("Submitted data:", cardContent);
   };
 
   return (
     <section className="form-side">
-      <form
-        onSubmit={() => {
-          handleSubmit();
-        }}
-      >
+      <form onSubmit={handleSubmit}>
         <div className="container">
           <label htmlFor="cardholder-name">
             Cardholder Name:
@@ -85,22 +91,21 @@ function FormSide({ cardContent, setCardContent }) {
               name="cardholderName"
               placeholder="e.g. Jane Appleseed"
               onChange={handleInput}
-              required
             />
           </label>
-          <p className="info--hidden" aria-live="polite"></p>
         </div>
 
         <div className="container">
-          <label htmlFor="card-number">
+          <label className="pedro" htmlFor="card-number">
             Card Number:
             <input
+              className="juan"
               type="text"
               id="card-number"
               name="cardNumber"
               placeholder="e.g. 1234 5678 9012 3456"
               onChange={handleInput}
-              required
+              minLength={19}
             />
           </label>
           <p className="info info--hidden" aria-live="polite"></p>
@@ -116,7 +121,6 @@ function FormSide({ cardContent, setCardContent }) {
                 name="expiryDateMonth"
                 placeholder="MM"
                 onChange={handleInput}
-                required
               />
               <input
                 type="number"
@@ -124,7 +128,6 @@ function FormSide({ cardContent, setCardContent }) {
                 name="expiryDateYear"
                 placeholder="YY"
                 onChange={handleInput}
-                required
               />
             </label>
             <p className="info info--hidden" aria-live="polite"></p>
@@ -138,10 +141,9 @@ function FormSide({ cardContent, setCardContent }) {
                 name="cvc"
                 placeholder="e.g. 123"
                 onChange={handleInput}
-                required
               />
             </label>
-            <p className="info--hidden" aria-live="polite"></p>
+            <p className="info info--hidden" aria-live="polite"></p>
           </div>
         </div>
         <div className="button--area">
