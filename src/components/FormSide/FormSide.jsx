@@ -1,5 +1,4 @@
 import "./FormSide.css";
-import { useState } from "react";
 
 function FormSide({ cardContent, setCardContent }) {
   const handleInput = (e) => {
@@ -96,7 +95,7 @@ function FormSide({ cardContent, setCardContent }) {
           <label htmlFor="card-number">
             Card Number:
             <input
-              type="number"
+              type="text"
               id="card-number"
               name="cardNumber"
               placeholder="e.g. 1234 5678 9012 3456"
@@ -142,7 +141,7 @@ function FormSide({ cardContent, setCardContent }) {
                 required
               />
             </label>
-            <p className="info info--hidden" aria-live="polite"></p>
+            <p className="info--hidden" aria-live="polite"></p>
           </div>
         </div>
         <div className="button--area">
