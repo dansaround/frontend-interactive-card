@@ -3,7 +3,7 @@
   height: 70vh;
   width: auto;
   padding-top: 50px;
-  background-color: whitesmoke;
+  background-color: white;
   padding-left: 20px;
 }
 
@@ -13,36 +13,49 @@
   margin: 30px 20px;
 }
 
-.exp-cvc-container {
+.exp-cvv-container {
   display: flex;
   margin: 30px 20px;
   justify-content: space-between;
 }
 
-.expiry-date-container {
-  margin: 0;
-  width: 50%;
-}
-
-.cvc-container {
+.cvv-container {
   margin: 0;
   margin-right: 30px;
   width: 30%;
 }
 
+.cvv-container input {
+  margin: 0;
+  margin-top: 16px;
+  margin-right: 30px;
+}
+
+.expiry-date-container {
+  margin: 0;
+  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+}
 .expiry-date-container input {
-  width: 30%;
-  margin-right: 30 px;
+  width: 60%;
+  margin-right: 30px;
+  margin-top: -20px;
+}
+
+#expiryDateMonth-input {
+  flex-basis: 50%;
+}
+
+#expiryDateYear-input {
+  flex-basis: 50%;
 }
 
 input {
   height: 40px;
   width: 90%;
   margin-top: 5px;
-}
-
-input:nth-child(2) {
-  margin-left: 20px;
+  padding: 0 10px;
 }
 
 input::placeholder {
@@ -80,28 +93,51 @@ label {
   letter-spacing: 1px;
   font-family: "Montserrat Alternates";
   text-transform: capitalize;
+  border-radius: 10px;
+}
+
+.error {
+  border-color: tomato;
+}
+
+.thank {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6rem;
+}
+
+.thank img {
+  width: 90px;
+  margin-bottom: 40px;
+}
+
+.thank h2,
+p {
+  font-family: "Space Grotesk", sans-serif;
+  margin-bottom: 30px;
+}
+
+.thank h2 {
+  letter-spacing: 5px;
+  font-weight: 200;
+  font-size: 2rem;
+}
+
+.thank p {
+  color: hsl(279, 6%, 55%);
+  font-size: 1.2rem;
+}
+
+.thank button {
+  margin: top;
 }
 
 /* VALIDADORES */
 
-.info--hidden {
-  height: 0 !important;
-}
-
-.info {
-  transition: height 0.3s ease-in-out;
-  font-size: 13px;
-  margin-top: 4px;
-  margin-bottom: 15px;
-  overflow: hidden;
-  height: 20px;
-  color: red;
-  transform: translateY(-10px);
-  margin: 0;
-}
-
-.input--error {
-  border: 1px solid red !important;
+.hidden {
+  display: none !important;
 }
 
 .shake {
@@ -132,12 +168,57 @@ label {
   }
 }
 
+.error-message {
+  position: relative;
+}
+
+.error-message::before {
+  content: "Wrong input";
+  position: absolute;
+  left: 0;
+  bottom: -20px;
+  color: red;
+  font-weight: 700;
+  font-size: 10px;
+}
+
 /* MEDIA QUERIES DESKTOP */
 @media only screen and (min-width: 768px) {
   .form-side {
-    display: flex;
+    position: absolute;
+    top: 0;
+    left: 500px;
+    width: auto;
+    height: 100%;
+    padding-right: 530px;
+    padding-left: 330px;
+    padding-top: 220px;
+  }
+
+  .button--primary {
+    width: 950%;
+  }
+
+  #expiryDateMonth-input {
+    flex-basis: 40%;
+  }
+  #expiryDateYear-input {
+    flex-basis: 40%;
+  }
+
+  .thank {
+    position: absolute;
+    top: -100px;
+    width: auto;
+    height: 100%;
+    left: 1000px;
+  }
+
+  .thank button {
+    width: 200px;
   }
 }
+
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 /* .form-side {
@@ -151,13 +232,13 @@ label {
 
 .cardholder-name-container,
 .card-number-container,
-.cvc-container {
+.cvv-container {
   display: flex;
   flex-direction: column;
   margin: 30px 20px;
 }
 
-.exp-cvc-container {
+.exp-cvv-container {
   display: flex;
   width: 100%;
   margin-left: 20px;
@@ -172,11 +253,11 @@ label {
   margin-left: 10px;
 }
 
-.cvc-container {
+.cvv-container {
   margin: 0;
   width: 35%;
 }
-.cvc-container input {
+.cvv-container input {
   width: 100%;
 }
 

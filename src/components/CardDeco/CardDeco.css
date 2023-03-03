@@ -101,11 +101,13 @@
     flex-direction: column;
     height: 245px;
     width: 447px;
-    transform: scale(0.7);
     position: absolute;
-    top: 0;
-    margin-top: 20%;
-    margin-left: -10%;
+    left: 250px;
+    top: 130px;
+    border-radius: 20px;
+    transform: scale(0.9);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
+    z-index: 1;
   }
 
   .card-back {
@@ -117,7 +119,11 @@
     height: 245px;
     width: 447px;
     position: absolute;
-    bottom: 8%;
-    left: 3%;
+    bottom: 250px;
+    left: 290px;
+    border-radius: 20px;
+    transform: scale(0.9);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
+    z-index: 1;
   }
 }

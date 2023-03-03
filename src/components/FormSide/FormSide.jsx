@@ -1,158 +1,171 @@
 import "./FormSide.css";
+import { useState } from "react";
 
-function FormSide({ cardContent, setCardContent }) {
-  const handleInput = (e) => {
-    const { name, value } = e.target;
-    if (name === "cardNumber")
-      e.target.value = value
-        .replace(/\s/g, "")
-        .replace(/(.{4})/g, "$1 ")
-        .trim()
-        .slice(0, 19);
-    if (name === "expiryDateMonth" || name === "expiryDateYear")
-      e.target.value = value
-        .toString()
-        .replace(/[^0-9]/g, "")
-        .substring(0, 2);
-    if (name === "expiryDateMonth" && value > 12) e.target.value = "12";
-    if (name === "cvc")
-      e.target.value = value.replace(/[^0-9]/g, "").substring(0, 3);
+function FormSide(formData) {
+  const [isFormCorrect, setIsFormCorrect] = useState(false);
 
-    setCardContent({ ...cardContent, [name]: e.target.value });
-  };
+  const {
+    cardContent,
+    isAValidCVV,
+    handleInputChange,
+    isAValidCardNumber,
+    isAValidCardholderName,
+    isAValidExpirationYear,
+    isAValidExpirationMonth,
+  } = formData;
 
-  const handleError = (target, message = "Error", type = "add") => {
-    const buttonPrimary = document.querySelector(".button--primary");
-    buttonPrimary.classList.add("shake");
-    buttonPrimary.addEventListener("animationend", () => {
-      buttonPrimary.classList.remove("shake");
-    });
+  const handleShowError = (target, messageTarget) => {
+    const selectedTarget = document.querySelector(target);
+    const selectedMessageTarget = document.querySelector(messageTarget);
 
-    document.querySelector(`.pedro`).nextElementSibling.innerHTML = message;
-    document
-      .querySelector(".pedro")
-      .classList[type === "add" ? "add" : "remove"]("info--hidden");
-    document.querySelector(`.juan`).classList[type]("input--error");
-
-    // document
-    //   .querySelector(`.label${target}`)
-    //   .nextElementSibling.classList[type === "add" ? "add" : "remove"](
-    //     "info--hidden"
-    //   );
-    // document.querySelector(`.label${target}`).classList[type]("input--error");
+    selectedTarget.className = "error";
+    selectedMessageTarget.className = "error-message";
   };
 
   //   FUNCION PARA EL BOTON SUBMIT
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleError("pedro", "Can`t be blank");
-    // for (let i in cardContent) {
-    //   if (!cardContent[i]) {
-    //     handleError(i, "Can`t be blank");
-    //   } else handleError(i, "", "remove");
-    // }
 
-    // if (cardContent.cardNumber) {
-    //   if (cardContent.cardNumber.length < 19) {
-    //     handleError("cardNumber", "Number is too short");
-    //   } else if (cardContent.cardNumber.match(/[^0-9\s]/g)) {
-    //     handleError("cardNumber", "Wrong format, numbers only");
-    //   } else handleError("cardNumber", "", "remove");
-    // }
+    const validCardholder = isAValidCardholderName(cardContent.cardholderName);
+    const validCardNumber = isAValidCardNumber(cardContent.cardNumber);
+    const validCardYear = isAValidExpirationYear(cardContent.expiryDateYear);
+    const validCardMonth = isAValidExpirationMonth(cardContent.expiryDateMonth);
+    const validCVV = isAValidCVV(cardContent.cvv);
 
-    // if (cardContent.cvc) {
-    //   if (cardContent.cvc.length < 3) {
-    //     handleError("cvc", "CVC is too short");
-    //   } else handleError("cvc", "", "remove");
-    // }
+    if (!validCardholder) {
+      handleShowError("#cardholder-name", "#cardholderName-input");
+    }
+    if (!validCardNumber) {
+      handleShowError("#card-number", "#cardNumber-input");
+    }
+    if (!validCardMonth) {
+      handleShowError("#expiry-date-month", "#expiryDateMonth-input");
+    }
+    if (!validCardYear) {
+      handleShowError("#expiry-date-year", "#expiryDateYear-input");
+    }
+    if (!validCVV) {
+      handleShowError("#cvv", "#cvv-input");
+    }
 
-    // if (!cardContent.expiryDateMonth)
-    //   handleError("expiryDateMonth", "Can`t be blank");
-    // if (!cardContent.expiryDateYear)
-    //   handleError("expiryDateYear", "Can`t be blank");
-
-    // if (document.querySelectorAll(".input--error").length === 0)
-    //   console.log("Submitted data:", cardContent);
-
-    // if (document.querySelectorAll(".info--hidden").length === 0)
-    //   console.log("Submitted data:", cardContent);
+    if (
+      ![
+        validCardholder,
+        validCardNumber,
+        validCardMonth,
+        validCardYear,
+        validCVV,
+      ].includes(false)
+    ) {
+      setIsFormCorrect(true);
+    }
   };
 
   return (
-    <section className="form-side">
-      <form onSubmit={handleSubmit}>
-        <div className="container">
-          <label htmlFor="cardholder-name">
-            Cardholder Name:
-            <input
-              type="text"
-              id="cardholder-name"
-              name="cardholderName"
-              placeholder="e.g. Jane Appleseed"
-              onChange={handleInput}
-            />
-          </label>
-        </div>
+    <>
+      {!isFormCorrect ? (
+        <section className="form-side">
+          <form onSubmit={handleSubmit}>
+            <div className="container">
+              <label className="labelcardholderName" htmlFor="cardholder-name">
+                Cardholder Name:
+                <div id="cardholderName-input">
+                  <input
+                    type="text"
+                    id="cardholder-name"
+                    name="cardholderName"
+                    placeholder="e.g. Jane Appleseed"
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </label>
+            </div>
 
-        <div className="container">
-          <label className="pedro" htmlFor="card-number">
-            Card Number:
-            <input
-              className="juan"
-              type="text"
-              id="card-number"
-              name="cardNumber"
-              placeholder="e.g. 1234 5678 9012 3456"
-              onChange={handleInput}
-              minLength={19}
-            />
-          </label>
-          <p className="info info--hidden" aria-live="polite"></p>
-        </div>
+            <div className="container">
+              <label className="labelcardNumber" htmlFor="card-number">
+                Card Number:
+                <div id="cardNumber-input">
+                  <input
+                    type="text"
+                    id="card-number"
+                    name="cardNumber"
+                    placeholder="e.g. 1234 5678 9012 3456"
+                    onChange={handleInputChange}
+                    maxLength={19}
+                  />
+                </div>
+              </label>
+              <p className="info info--hidden" aria-live="polite"></p>
+            </div>
 
-        <div className="exp-cvc-container">
-          <div className="expiry-date-container">
-            <label htmlFor="expiry-date">
-              Exp. Date (MM/YY)
-              <input
-                type="number"
-                id="expiry-date-month"
-                name="expiryDateMonth"
-                placeholder="MM"
-                onChange={handleInput}
-              />
-              <input
-                type="number"
-                id="expiry-date-year"
-                name="expiryDateYear"
-                placeholder="YY"
-                onChange={handleInput}
-              />
-            </label>
-            <p className="info info--hidden" aria-live="polite"></p>
-          </div>
-          <div className="cvc-container">
-            <label htmlFor="cvc">
-              CVC:
-              <input
-                type="number"
-                id="cvc"
-                name="cvc"
-                placeholder="e.g. 123"
-                onChange={handleInput}
-              />
-            </label>
-            <p className="info info--hidden" aria-live="polite"></p>
-          </div>
-        </div>
-        <div className="button--area">
-          <button type="submit" className="button--primary">
-            Confirm
+            <div className="exp-cvv-container">
+              <div className="expiry-date-container">
+                <label
+                  className="labelmm-labelyy"
+                  htmlFor="expiry-date"
+                ></label>
+                Exp. Date (MM/YY):
+                <div id="expiryDateMonth-input">
+                  <input
+                    type="number"
+                    id="expiry-date-month"
+                    name="expiryDateMonth"
+                    placeholder="MM"
+                    maxLength={2}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div id="expiryDateYear-input">
+                  <input
+                    type="number"
+                    id="expiry-date-year"
+                    name="expiryDateYear"
+                    placeholder="YY"
+                    maxLength={2}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <p className="info info--hidden" aria-live="polite"></p>
+              </div>
+              <div className="cvv-container">
+                <label className="labelcvv" htmlFor="cvv">
+                  cvv:
+                  <div id="cvv-input">
+                    <input
+                      type="number"
+                      id="cvv"
+                      name="cvv"
+                      placeholder="e.g. 123"
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </label>
+                <p className="info info--hidden" aria-live="polite"></p>
+              </div>
+            </div>
+            <div className="button--area">
+              <button type="submit" className="button--primary">
+                Confirm
+              </button>
+            </div>
+          </form>
+        </section>
+      ) : (
+        <div className="thank">
+          <img src="src/assets/images/icon-complete.svg" alt="completed" />
+          <h2>THANK YOU!</h2>
+          <p>We've added your card details</p>
+          <button
+            onClick={() => {
+              setIsFormCorrect(false);
+            }}
+            className="button--primary"
+          >
+            Continue
           </button>
         </div>
-      </form>
-    </section>
+      )}
+    </>
   );
 }
 export default FormSide;
@@ -180,8 +193,8 @@ export default FormSide;
 //   updateCardContent(e);
 // };
 
-// const handleCvcChange = (e) => {
-//   setCvc(e.target.value);
+// const handlecvvChange = (e) => {
+//   setcvv(e.target.value);
 //   updateCardContent(e);
 // };
 

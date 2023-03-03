@@ -5,7 +5,7 @@ function CardDeco({ cardContent }) {
     <div className="cardDeco">
       <div className="card-back">
         <div className="card-back-content">
-          <span>{cardContent.cvc || "CVV"}</span>
+          <span>{cardContent.cvv || "CVV"}</span>
         </div>
       </div>
       <div className="card-front">
